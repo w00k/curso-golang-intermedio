@@ -16,19 +16,42 @@ type FullTimeEmployee struct {
 	Employee
 }
 
-func GetMessage(p Person) {
-	fmt.Printf("%s with age %d\n", p.name, p.age)
+type TemporaryEmployee struct {
+	Person
+	Employee
+	taxRate int
 }
 
-// en Go/Golang no existe la herencia como tal, sino el principio que debe existir composición sobre la herencia
-// utilizando un campo anónimo en un struct puede "heredar" todas las propiedades y métodos
+// PrintInfo es la interface
+type PrintInfo interface {
+	getMessage() string
+}
+
+// getMessage implementa la interface con el getMessage del tipo correspondiente
+func getMessage(p PrintInfo) {
+	fmt.Println(p.getMessage())
+}
+
+// getMessage para el FullTimeEmployee
+func (ftEmployee FullTimeEmployee) getMessage() string {
+	return "Full Time Employee"
+}
+
+// getMessage para el TemporaryEmployee
+func (temporaryEmployee TemporaryEmployee) getMessage() string {
+	return "Temporary Employee"
+}
+
+// interfaces se utilizan en casi todos los patrones de diseño y también se usan para hacer  en Go/Golang
 func main() {
 	ftEmployee := FullTimeEmployee{}
 	ftEmployee.name = "Francisco"
 	ftEmployee.age = 39
-	ftEmployee.id = 1
-	fmt.Printf("%v", ftEmployee)
+	ftEmployee.id = 8
 
-	fmt.Println("")
-	GetMessage(ftEmployee.Person)
+	temporaryEmployee := TemporaryEmployee{}
+
+	// GetMessage
+	getMessage(ftEmployee)
+	getMessage(temporaryEmployee)
 }
