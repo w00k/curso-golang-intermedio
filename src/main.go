@@ -2,67 +2,33 @@ package main
 
 import "fmt"
 
-type Employee struct {
-	id   int
+type Person struct {
 	name string
+	age  int
 }
 
-func (e *Employee) SetId(id int) {
-	e.id = id
+type Employee struct {
+	id int
 }
 
-func (e *Employee) SetName(name string) {
-	e.name = name
+type FullTimeEmployee struct {
+	Person
+	Employee
 }
 
-func (e *Employee) GetId() int {
-	return e.id
+func GetMessage(p Person) {
+	fmt.Printf("%s with age %d\n", p.name, p.age)
 }
 
-func (e *Employee) GetName() string {
-	return e.name
-}
-
-// NewEmployee constructor
-func NewEmployee(id int, name string) *Employee {
-	return &Employee{
-		id:   id,
-		name: name,
-	}
-}
-
+// en Go/Golang no existe la herencia como tal, sino el principio que debe existir composición sobre la herencia
+// utilizando un campo anónimo en un struct puede "heredar" todas las propiedades y métodos
 func main() {
-	// constructor
-	e := Employee{}
-	fmt.Printf("%v\n", e)
+	ftEmployee := FullTimeEmployee{}
+	ftEmployee.name = "Francisco"
+	ftEmployee.age = 39
+	ftEmployee.id = 1
+	fmt.Printf("%v", ftEmployee)
 
-	e.id = 1
-	e.name = "Francisco"
-	fmt.Printf("%v\n", e)
-
-	e.SetId(8)
-	e.SetName("w00k")
-	fmt.Printf("%v\n", e)
-
-	fmt.Println("\nvalores desde métodos get")
-	fmt.Println("id:", e.GetId())
-	fmt.Println("name:", e.GetName())
-
-	// constructor
-	employee := Employee{
-		id:   5,
-		name: "Pancho",
-	}
-
-	fmt.Printf("\n%v\n", employee)
-
-	// constructor
-	newEmployee := new(Employee)
-	fmt.Printf("%v\n", *newEmployee)
-	newEmployee.id = 10
-	newEmployee.name = "Leif"
-	fmt.Printf("%v\n", *newEmployee)
-
-	employeeFunction := NewEmployee(11, "Clark")
-	fmt.Printf("%v\n", *employeeFunction)
+	fmt.Println("")
+	GetMessage(ftEmployee.Person)
 }
