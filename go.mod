@@ -2,7 +2,4 @@ module github.com/w00k/curso-golang-intermedio
 
 go 1.17
 
-require (
-	github.com/donvito/hellomod v1.0.1 // indirect
-	github.com/donvito/hellomod/v2 v2.0.0 // indirect
-)
+require github.com/w00k/hellplatzimod v0.0.0-20220131194434-87404776de03 // indirect

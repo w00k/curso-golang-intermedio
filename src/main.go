@@ -1,11 +1,7 @@
 package main
 
-import (
-	"github.com/donvito/hellomod"
-	hellomod2 "github.com/donvito/hellomod/v2"
-)
+import utils "github.com/w00k/hellplatzimod"
 
 func main() {
-	hellomod.SayHello()
-	hellomod2.SayHello("Platzi")
+	utils.HelloWorld()
 }

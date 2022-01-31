@@ -25,8 +25,8 @@ En el **go.mod** se agregará una nueva línea y se creará un archivo **sum.go*
 go mod tidy
 ```
 
-4. Para usar una versión especifica del módulo, se tiene que especificar usando mod con el siguiente comando.
+4. Para usar una versión especifica del módulo, se tiene que especificar usando mod con el siguiente comando, el **/2** es lo que le da la versión.
 
 ```bash 
-go get mod https://github.com/donvito/hellomod/v2
+go get https://github.com/donvito/hellomod/v2
 ```
