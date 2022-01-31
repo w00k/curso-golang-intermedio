@@ -2,56 +2,36 @@ package main
 
 import "fmt"
 
-type Person struct {
-	name string
-	age  int
+// nofiticaciones por SMS y EMAIL
+
+type INotificationFactory interface {
+	SendNotification()
+	GetSender() ISender
 }
 
-type Employee struct {
-	id int
+type ISender interface {
+	GetSenderMethod() string
+	GetSenderChannel() string
 }
 
-type FullTimeEmployee struct {
-	Person
-	Employee
+type SMSNotification struct {
 }
 
-type TemporaryEmployee struct {
-	Person
-	Employee
-	taxRate int
+func (SMSNotification) SendNotification() {
+	fmt.Println("Sending notification via SMS")
 }
 
-// PrintInfo es la interface
-type PrintInfo interface {
-	getMessage() string
+func (SMSNotification) GetSender() ISender {
+	return SMSNotificationSender{}
 }
 
-// getMessage implementa la interface con el getMessage del tipo correspondiente
-func getMessage(p PrintInfo) {
-	fmt.Println(p.getMessage())
+type SMSNotificationSender struct {
 }
 
-// getMessage para el FullTimeEmployee
-func (ftEmployee FullTimeEmployee) getMessage() string {
-	return "Full Time Employee"
+func (SMSNotificationSender) GetSenderMethod() string {
+	return "SMS"
 }
 
-// getMessage para el TemporaryEmployee
-func (temporaryEmployee TemporaryEmployee) getMessage() string {
-	return "Temporary Employee"
-}
-
-// interfaces se utilizan en casi todos los patrones de diseño y también se usan para hacer  en Go/Golang
-func main() {
-	ftEmployee := FullTimeEmployee{}
-	ftEmployee.name = "Francisco"
-	ftEmployee.age = 39
-	ftEmployee.id = 8
-
-	temporaryEmployee := TemporaryEmployee{}
-
-	// GetMessage
-	getMessage(ftEmployee)
-	getMessage(temporaryEmployee)
+func (SMSNotificationSender) GetSenderChannel() string {
+	return "Twitter"
 }
