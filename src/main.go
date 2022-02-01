@@ -16,4 +16,7 @@ func GetMax(x, y int) int {
 func main() {
 	x := Sum(5, 5)
 	fmt.Println(x)
+
+	y := GetMax(3, 11)
+	fmt.Println(y)
 }
