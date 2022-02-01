@@ -71,3 +71,59 @@ go tool cover -html=coverage.out
 ```
 
 Se abrira nuestro navegador web con el reporte en HTML.
+
+## Profiling
+
+```bash 
+go test -cpuprofile=cou.out
+```
+
+```bash
+go tool pprof cou.out
+go tool pprof cou.out 
+Type: cpu
+Time: Jan 31, 2022 at 10:36pm (-03)
+Duration: 67.61s, Total samples = 60.41s (89.35%)
+Entering interactive mode (type "help" for commands, "o" for options)
+(pprof) top // comando escrito
+Showing nodes accounting for 60.22s, 99.69% of 60.41s total
+Dropped 20 nodes (cum <= 0.30s)
+      flat  flat%   sum%        cum   cum%
+    60.22s 99.69% 99.69%     60.34s 99.88%  github.com/w00k/curso-golang-intermedio/src.Fibonacci
+         0     0% 99.69%     60.34s 99.88%  github.com/w00k/curso-golang-intermedio/src.TestFibonacci
+         0     0% 99.69%     60.34s 99.88%  testing.tRunner
+(pprof) list Fibonacci // comando escrito
+Total: 60.41s
+ROUTINE ======================== github.com/w00k/curso-golang-intermedio/src.Fibonacci in /xxxx/xxxxxx/go/src/github.com/w00k/curso-golang-intermedio/src/main.go
+    60.22s     96.55s (flat, cum) 159.82% of Total
+         .          .     11:		return x
+         .          .     12:	}
+         .          .     13:	return y
+         .          .     14:}
+         .          .     15:
+    25.74s     25.79s     16:func Fibonacci(n int) int {
+     2.07s      2.07s     17:	if n <= 1 {
+     8.32s      8.35s     18:		return n
+         .          .     19:	}
+    24.09s     60.34s     20:	return Fibonacci(n-1) + Fibonacci(n-2) // mayor tiempo de ejecución en el código
+         .          .     21:}
+         .          .     22:
+         .          .     23:func main() {
+         .          .     24:	x := Sum(5, 5)
+         .          .     25:	fmt.Println(x)
+ROUTINE ======================== github.com/w00k/curso-golang-intermedio/src.TestFibonacci in /xxxx/xxxxxx/go/src/github.com/w00k/curso-golang-intermedio/src/main_test.go
+         0     60.34s (flat, cum) 99.88% of Total
+         .          .     54:		{8, 21},
+         .          .     55:		{50, 12586269025},
+         .          .     56:	}
+         .          .     57:
+         .          .     58:	for _, item := range tables {
+         .     60.34s     59:		fibonacci := Fibonacci(item.a) // mayor tiempo de ejecución en el test
+         .          .     60:		if fibonacci != item.n {
+         .          .     61:			t.Errorf("Fibonacci war incorrect, got %d and except %d", fibonacci, item.n)
+         .          .     62:		}
+         .          .     63:	}
+         .          .     64:}
+(pprof) web // también puede ser pdf 
+
+```
