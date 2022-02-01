@@ -1,7 +1,19 @@
 package main
 
-import utils "github.com/w00k/hellplatzimod"
+import "fmt"
+
+func Sum(x, y int) int {
+	return x + y
+}
+
+func GetMax(x, y int) int {
+	if x > y {
+		return x
+	}
+	return y
+}
 
 func main() {
-	utils.HelloWorld()
+	x := Sum(5, 5)
+	fmt.Println(x)
 }
