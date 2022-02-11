@@ -2,98 +2,24 @@ package main
 
 import (
 	"fmt"
+	"sync"
 	"time"
 )
 
-type Person struct {
-	name string
-	age  int
-	dni  string
-}
-
-type Employee struct {
-	id       int
-	position string
-}
-
-type FullTimeEmployee struct {
-	Person
-	Employee
-}
-
-type TemporaryEmployee struct {
-	Person
-	Employee
-}
-
-// PrintInfo es la interface
-type PrintInfo interface {
-	getMessage() string
-}
-
-// getMessage implementa la interface con el getMessage del tipo correspondiente
-func getMessage(p PrintInfo) {
-	fmt.Println(p.getMessage())
-}
-
-// getMessage para el FullTimeEmployee
-func (ftEmployee FullTimeEmployee) getMessage() string {
-	return "Full Time Employee"
-}
-
-// getMessage para el TemporaryEmployee
-func (temporaryEmployee TemporaryEmployee) getMessage() string {
-	return "Temporary Employee"
-}
-
-// para testcase
-// GetPersonByDni simula la búsqueda en bdd de una persona por el dni
-var GetPersonByDni = func(dni string) (Person, error) {
-	time.Sleep(5 * time.Second)
-	// SELECT * FROM ...
-	return Person{}, nil
-}
-
-// para testcase
-// GetEmployeeById simula la búsqueda en bdd de un empleado por el id
-var GetEmployeeById = func(id int) (Employee, error) {
-	time.Sleep(5 * time.Second)
-	// SELECT * FROM ...
-	return Employee{}, nil
-}
-
-// para el testcase
-// GetFullTimeEmployeeById obtiene los datos de la persona y del empleado
-func GetFullTimeEmployeeById(id int, dni string) (FullTimeEmployee, error) {
-	var ftEmployee FullTimeEmployee
-
-	e, err := GetEmployeeById(id)
-	if err != nil {
-		return ftEmployee, err
-	}
-
-	ftEmployee.Employee = e
-
-	p, err := GetPersonByDni(dni)
-	if err != nil {
-		return ftEmployee, err
-	}
-
-	ftEmployee.Person = p
-
-	return ftEmployee, nil
-}
-
-// interfaces se utilizan en casi todos los patrones de diseño y también se usan para hacer  en Go/Golang
 func main() {
-	ftEmployee := FullTimeEmployee{}
-	ftEmployee.name = "Francisco"
-	ftEmployee.age = 39
-	ftEmployee.id = 8
+	var wg sync.WaitGroup // instanciamos waitgroup, que funciona como un contador
 
-	temporaryEmployee := TemporaryEmployee{}
+	for i := 0; i < 10; i++ {
+		wg.Add(1) // sumamos 1
+		go doSomething(i, &wg)
+	}
+	wg.Wait() // espera hasta que el waitgroup sea 0, no es necesario bloquear un canal
+}
 
-	// GetMessage
-	getMessage(ftEmployee)
-	getMessage(temporaryEmployee)
+//doSomething simula un proceso que se demora arto tiempoS
+func doSomething(i int, wg *sync.WaitGroup) {
+	defer wg.Done() // restamos 1
+	fmt.Printf("Started, index: %d \n", i)
+	time.Sleep(2 * time.Second)
+	fmt.Printf("End")
 }
