@@ -6,20 +6,27 @@ import (
 	"time"
 )
 
+// c := [][]
+// c := [goRoutine1][]
+// c := [goRoutine1][goRoutine2]
+// c := [][goRoutine2]
+// c := [goRoutine3][goRoutine2]
+// c := [goRoutine3][]
 func main() {
-	var wg sync.WaitGroup // instanciamos waitgroup, que funciona como un contador
-
-	for i := 0; i < 10; i++ {
-		wg.Add(1) // sumamos 1
-		go doSomething(i, &wg)
+	c := make(chan int, 5)
+	var wg sync.WaitGroup
+	for i := 0; i <= 10; i++ {
+		c <- 1
+		wg.Add(1)
+		go doSomething(i, &wg, c)
 	}
-	wg.Wait() // espera hasta que el waitgroup sea 0, no es necesario bloquear un canal
+	wg.Wait() // bloqueo del programa
 }
 
-//doSomething simula un proceso que se demora arto tiempoS
-func doSomething(i int, wg *sync.WaitGroup) {
-	defer wg.Done() // restamos 1
-	fmt.Printf("Started, index: %d \n", i)
-	time.Sleep(2 * time.Second)
-	fmt.Printf("End")
+func doSomething(i int, wg *sync.WaitGroup, c chan int) {
+	defer wg.Done()
+	fmt.Printf("Id %d started\n", i)
+	time.Sleep(4 * time.Second)
+	fmt.Printf("Id %d finished\n", i)
+	<-c
 }
