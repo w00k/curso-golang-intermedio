@@ -24,7 +24,6 @@ type FullTimeEmployee struct {
 type TemporaryEmployee struct {
 	Person
 	Employee
-	taxRate int
 }
 
 // PrintInfo es la interface
