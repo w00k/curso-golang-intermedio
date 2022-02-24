@@ -4,36 +4,47 @@ import (
 	"fmt"
 )
 
-// Generator genera números de 0 a 10, con el '<-' a la derecha de 'chan' el channel solo para escribir
-func Generator(c chan<- int) {
-	for i := 0; i <= 10; i++ {
-		c <- i
+// Poder de la concurrencia que posee Go/Golang o también conocido como EORKER POOLS
+
+// Fibonacci genera la secuencia de fibonacci de forma recursiva
+func Fibonacci(n int) int {
+	if n <= 1 {
+		return n
 	}
-	close(c) // bloquea el canal, deshabilitar el canal
+	return Fibonacci(n-1) + Fibonacci(n-2)
 }
 
-// Double lee el channel y retorna en otro channel 'out' el resultado,
-// el '<-' a la izquiera de 'chan' lo deja solo de lectura, con esto se mitiga que los channel sean usados para lectura y escritura
-func Double(in <-chan int, out chan int) {
-	for value := range in {
-		out <- 2 * value
-		//in <- 1 deadlock, porque 'in' solo es de lectura en esta clase
-	}
-	close(out)
-}
-
-func Print(c chan int) {
-	for value := range c {
-		fmt.Println(value)
+// Worker que a la escucha de los channels, calcula la serie y el resultado lo almacena en otro channel
+func Worker(id int, jobs <-chan int, results chan<- int) {
+	for job := range jobs {
+		fmt.Printf("Worker with id %d started fic with %d\n", id, job)
+		fib := Fibonacci(job)
+		fmt.Printf("Worker with id %d, job %d and fib %d\n", id, job, fib)
+		results <- fib
 	}
 }
 
 func main() {
-	// pipelines: funciones que llaman a más funciones en orden, existe dependencia de dichas funciones
-	generator := make(chan int)
-	doubles := make(chan int)
 
-	go Generator(generator)
-	go Double(generator, doubles)
-	Print(doubles)
+	// def de tareas
+	tasks := []int{2, 3, 4, 5, 7, 10, 12, 40}
+	nWorkers := 3
+	jobs := make(chan int, len(tasks)) // crear el channel jobs de tipo int, longitud de canal que es la cantidad de tareas que hay (tipo semáforo)
+	results := make(chan int, len(tasks))
+
+	// se crean los workers
+	for i := 0; i < nWorkers; i++ {
+		go Worker(i, jobs, results)
+	}
+
+	// lee el valor del slice, lo agrega al channel jobs y se procesa la serie de fibonacci
+	for _, value := range tasks {
+		jobs <- value
+	}
+	close(jobs) // cierro el channel
+
+	// imprime los resultados
+	for r := 0; r < len(tasks); r++ {
+		<-results
+	}
 }
