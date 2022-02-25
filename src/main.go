@@ -32,7 +32,7 @@ func main() {
 	jobs := make(chan int, len(tasks)) // crear el channel jobs de tipo int, longitud de canal que es la cantidad de tareas que hay (tipo semáforo)
 	results := make(chan int, len(tasks))
 
-	// se crean los workers
+	// se crean los workers, estan a la escucha
 	for i := 0; i < nWorkers; i++ {
 		go Worker(i, jobs, results)
 	}
