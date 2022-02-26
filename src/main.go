@@ -2,49 +2,33 @@ package main
 
 import (
 	"fmt"
+	"time"
 )
 
-// Poder de la concurrencia que posee Go/Golang o también conocido como EORKER POOLS
-
-// Fibonacci genera la secuencia de fibonacci de forma recursiva
-func Fibonacci(n int) int {
-	if n <= 1 {
-		return n
-	}
-	return Fibonacci(n-1) + Fibonacci(n-2)
-}
-
-// Worker que a la escucha de los channels, calcula la serie y el resultado lo almacena en otro channel
-func Worker(id int, jobs <-chan int, results chan<- int) {
-	for job := range jobs {
-		fmt.Printf("Worker with id %d started fic with %d\n", id, job)
-		fib := Fibonacci(job)
-		fmt.Printf("Worker with id %d, job %d and fib %d\n", id, job, fib)
-		results <- fib
-	}
+func DoSomeThing(i time.Duration, c chan<- int, param int) {
+	time.Sleep(i)
+	c <- param
 }
 
 func main() {
+	c1 := make(chan int)
+	c2 := make(chan int)
 
-	// def de tareas
-	tasks := []int{2, 3, 4, 5, 7, 10, 12, 40}
-	nWorkers := 3
-	jobs := make(chan int, len(tasks)) // crear el channel jobs de tipo int, longitud de canal que es la cantidad de tareas que hay (tipo semáforo)
-	results := make(chan int, len(tasks))
+	d1 := 4 * time.Second
+	d2 := 2 * time.Second
 
-	// se crean los workers, estan a la escucha
-	for i := 0; i < nWorkers; i++ {
-		go Worker(i, jobs, results)
-	}
+	go DoSomeThing(d1, c1, 1)
+	go DoSomeThing(d2, c2, 2)
 
-	// lee el valor del slice, lo agrega al channel jobs y se procesa la serie de fibonacci
-	for _, value := range tasks {
-		jobs <- value
-	}
-	close(jobs) // cierro el channel
+	// fmt.Println(<-c1) // queda bloqueado, independientemente de quien llegue primero
+	// fmt.Println(<-c2) // termina primero y queda a la espera que el primer print termina primero
 
-	// imprime los resultados
-	for r := 0; r < len(tasks); r++ {
-		<-results
+	for i := 0; i < 2; i++ {
+		select {
+		case channelMsg1 := <-c1:
+			fmt.Println(channelMsg1)
+		case channelMsg2 := <-c2:
+			fmt.Println(channelMsg2)
+		}
 	}
 }
