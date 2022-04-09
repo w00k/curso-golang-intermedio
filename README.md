@@ -35,6 +35,11 @@ type employee struc {
 
 Los tipos de accesos se revisan en la siguiente clase. 
 
+# Metodos y funciones
+
+En Esta clase se revisa como acceder a los atributos privados por medio de metodos publicos (semejante a como lo hace Java).
+
+
 ## Módulos 
 
 1. Usar módulos en Go/Golang.
@@ -191,4 +196,3 @@ func TestGetFullTimeEmployeeById(t testing.T) {
 	}
 }
 ```
-
