@@ -20,5 +20,5 @@ type employee struc {
 }
 ```
 
-Los tipos de accesos se revisan en la siguiente clase. 
+Los tipos de accesos se revisan en la clase 03_methods_functions. 
 
