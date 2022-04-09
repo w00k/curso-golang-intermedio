@@ -2,67 +2,31 @@ package main
 
 import "fmt"
 
-type Employee struct {
-	id   int
-	name string
+func Sum(x, y int) int {
+	return x + y
 }
 
-func (e *Employee) SetId(id int) {
-	e.id = id
-}
-
-func (e *Employee) SetName(name string) {
-	e.name = name
-}
-
-func (e *Employee) GetId() int {
-	return e.id
-}
-
-func (e *Employee) GetName() string {
-	return e.name
-}
-
-// NewEmployee constructor
-func NewEmployee(id int, name string) *Employee {
-	return &Employee{
-		id:   id,
-		name: name,
+func GetMax(x, y int) int {
+	if x > y {
+		return x
 	}
+	return y
+}
+
+func Fibonacci(n int) int {
+	if n <= 1 {
+		return n
+	}
+	return Fibonacci(n-1) + Fibonacci(n-2)
 }
 
 func main() {
-	// constructor
-	e := Employee{}
-	fmt.Printf("%v\n", e)
+	x := Sum(5, 5)
+	fmt.Println(x)
 
-	e.id = 1
-	e.name = "Francisco"
-	fmt.Printf("%v\n", e)
+	y := GetMax(3, 11)
+	fmt.Println(y)
 
-	e.SetId(8)
-	e.SetName("w00k")
-	fmt.Printf("%v\n", e)
-
-	fmt.Println("\nvalores desde métodos get")
-	fmt.Println("id:", e.GetId())
-	fmt.Println("name:", e.GetName())
-
-	// constructor
-	employee := Employee{
-		id:   5,
-		name: "Pancho",
-	}
-
-	fmt.Printf("\n%v\n", employee)
-
-	// constructor
-	newEmployee := new(Employee)
-	fmt.Printf("%v\n", *newEmployee)
-	newEmployee.id = 10
-	newEmployee.name = "Leif"
-	fmt.Printf("%v\n", *newEmployee)
-
-	employeeFunction := NewEmployee(11, "Clark")
-	fmt.Printf("%v\n", *employeeFunction)
+	f := Fibonacci(50)
+	fmt.Println(f)
 }
