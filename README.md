@@ -1,4 +1,4 @@
-# Curso Go/Golang - intermedio
+# Curso Go/Golang Intermedio
 
 Curso intermediode go/golang de platzi
 
@@ -14,6 +14,26 @@ Lo que se revisa en el repaso son
 - Channels (se profundiza en el curso)
 - Referencias y apuntadores (se profundiza en el curso)
 - Funciones (se profundiza en el curso)
+
+# Struct y clases
+
+Como crear una clase en Go/Golang, a diferencia de otros lenguajes acá se parece a C/C++ se crean estructuras de datos, que dependiendo de la primera letra pueden ser Publicos o privados. 
+
+```go 
+// struct público
+type Employee struct {
+    Id int      // atributo público
+    Name string // atributo público
+}
+
+// struct privado
+type employee struc {
+    id int       // atributo privado
+    name string  // atributo privado
+}
+```
+
+Los tipos de accesos se revisan en la siguiente clase. 
 
 ## Módulos 
 
@@ -171,3 +191,4 @@ func TestGetFullTimeEmployeeById(t testing.T) {
 	}
 }
 ```
+
