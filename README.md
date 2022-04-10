@@ -2,6 +2,7 @@
 
 Curso intermediode go/golang de platzi
 
+
 # Repaso general
 
 Este es el repago general del curso básico de Go/Golang, donde se presenta editor Microsoft Visual Studio Code como editor del curso, puedes usar otro no es obligatorio. 
@@ -42,6 +43,12 @@ En Esta clase se revisa como acceder a los atributos privados por medio de metod
 # Constructores
 
 Se revisa como generar constructures usando los apuntadores, generando instancias del objeto. Adicionalmente, cuando se crea un objeto sin constructor, este setea los valores por defectos (no nulos).
+
+# Métodos y funciones
+
+En Go/Golang no existe la herencia como tal, sino el principio que debe existir composición sobre la herencia.
+
+Utilizando un campo anónimo en un struct puede "heredar" todas las propiedades y métodos.
 
 ## Módulos 
 
