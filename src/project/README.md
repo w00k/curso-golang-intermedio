@@ -2,54 +2,6 @@
 
 Curso intermediode go/golang de platzi
 
-
-# Repaso general
-
-Este es el repago general del curso básico de Go/Golang, donde se presenta editor Microsoft Visual Studio Code como editor del curso, puedes usar otro no es obligatorio. 
-
-Lo que se revisa en el repaso son 
-- Instanciar variables
-- Manejo de errores y el patrón utilizado
-- Map
-- Slice y como recorrer los diferentes elementos
-- Channels (se profundiza en el curso)
-- Referencias y apuntadores (se profundiza en el curso)
-- Funciones (se profundiza en el curso)
-
-# Struct y clases
-
-Como crear una clase en Go/Golang, a diferencia de otros lenguajes acá se parece a C/C++ se crean estructuras de datos, que dependiendo de la primera letra pueden ser Publicos o privados. 
-
-```go 
-// struct público
-type Employee struct {
-    Id int      // atributo público
-    Name string // atributo público
-}
-
-// struct privado
-type employee struc {
-    id int       // atributo privado
-    name string  // atributo privado
-}
-```
-
-Los tipos de accesos se revisan en la siguiente clase. 
-
-# Metodos y funciones
-
-En Esta clase se revisa como acceder a los atributos privados por medio de metodos publicos (semejante a como lo hace Java).
-
-# Constructores
-
-Se revisa como generar constructures usando los apuntadores, generando instancias del objeto. Adicionalmente, cuando se crea un objeto sin constructor, este setea los valores por defectos (no nulos).
-
-# Métodos y funciones
-
-En Go/Golang no existe la herencia como tal, sino el principio que debe existir composición sobre la herencia.
-
-Utilizando un campo anónimo en un struct puede "heredar" todas las propiedades y métodos.
-
 ## Módulos 
 
 1. Usar módulos en Go/Golang.

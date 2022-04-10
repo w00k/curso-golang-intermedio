@@ -1,0 +1,64 @@
+package main
+
+import "testing"
+
+func TestSum(t *testing.T) {
+	//total := Sum(5, 5)
+	//if total != 10 {
+	//t.Errorf("Sum was incorrect, got %d expected %d)", total, 10)
+	//}
+
+	tables := []struct {
+		a int
+		b int
+		n int
+	}{
+		{1, 2, 3},
+		{2, 2, 4},
+		{25, 26, 51},
+	}
+
+	for _, item := range tables {
+		total := Sum(item.a, item.b)
+		if total != item.n {
+			t.Errorf("Sum was incorrect, got %d expected %d)", total, item.n)
+		}
+	}
+}
+
+func TestMax(t *testing.T) {
+	tables := []struct {
+		a int
+		b int
+		n int
+	}{
+		{1, 2, 2},
+		{50, 25, 50},
+		{6, 7, 7},
+	}
+
+	for _, item := range tables {
+		max := GetMax(item.a, item.b)
+		if max != item.n {
+			t.Errorf("GetMax was incorrect, get %d and expected %d", max, item.n)
+		}
+	}
+}
+
+func TestFibonacci(t *testing.T) {
+	tables := []struct {
+		a int
+		n int
+	}{
+		{1, 1},
+		{8, 21},
+		{50, 12586269025},
+	}
+
+	for _, item := range tables {
+		fibonacci := Fibonacci(item.a)
+		if fibonacci != item.n {
+			t.Errorf("Fibonacci war incorrect, got %d and except %d", fibonacci, item.n)
+		}
+	}
+}
