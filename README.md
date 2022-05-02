@@ -50,6 +50,10 @@ En Go/Golang no existe la herencia como tal, sino el principio que debe existir 
 
 Utilizando un campo anónimo en un struct puede "heredar" todas las propiedades y métodos.
 
+# Herencia 
+
+En este clase vemos la herencia en Go/Golang, utilizando campos anónimos e implementamos la interface que imprime un mensaje.
+
 ## Módulos 
 
 1. Usar módulos en Go/Golang.
