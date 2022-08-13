@@ -54,6 +54,10 @@ Utilizando un campo anónimo en un struct puede "heredar" todas las propiedades 
 
 En este clase vemos la herencia en Go/Golang, utilizando campos anónimos e implementamos la interface que imprime un mensaje.
 
+# Funciones Variadicas
+
+Es el caso en que las funciones pueden recibir 1 o más elementos del mismo tipo.
+
 # Modelo Factory
 
 Utilización de Factory para generar SMS o mensajes por Twitter, utilizando Factory.
